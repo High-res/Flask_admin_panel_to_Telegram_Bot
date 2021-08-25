@@ -1,0 +1,26 @@
+{% extends 'template.html' %}
+
+
+{% block title %}
+<title>Пользователи Telegram</title>
+{% endblock %}
+
+{% block body %}
+<table class="table">
+    <tr>
+        <td class="bold">Имя в <i class="fab fa-telegram"></i></td>
+        <td class="bold">ID <i class="fab fa-telegram"></i></td>
+        <td class="bold">Дата регистрации</td>
+        <td></td>
+    </tr>
+    {% for user in users|reverse %}
+    <tr>
+        <form method="post">
+            <td>{{user.name}}</td>
+            <td>{{user.tg_id}}</td>
+            <td>{{user.register_date}}</td>
+        </form>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

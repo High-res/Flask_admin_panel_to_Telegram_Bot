@@ -1,0 +1,28 @@
+{% extends 'template.html' %}
+
+{% block title %}
+<title>UCJ</title>
+{% endblock %}
+
+
+{% block body %}
+<h1>Hi, {{g.user.username}}!</h1>
+
+<table class="table">
+    <tr>
+        <td class="bold">Фамилия Имя</td>
+        <td class="bold">Месяц день рождения</td>
+        <td class="bold">Телеграм ID</td>
+        <td></td>
+    </tr>
+    <tr>
+        <form method="post">
+            <td><input type="text" class="form-control" name="new_worker_name" placeholder="Введите имя"></td>
+            <td><input type="text" class="form-control" name="new_worker_b_day" placeholder="дата рождения месяц день 02-08 (2 августа)"></td>
+            <td><input type="text" class="form-control" name="new_worker_tg_id" placeholder="id Telegram Смотреть в пользователи"></td>
+            <td><input type="submit" class="form-control" class="fadeIn fourth" value="Сохранить"></td>
+        </form>
+    </tr>
+</table>
+
+{% endblock %}

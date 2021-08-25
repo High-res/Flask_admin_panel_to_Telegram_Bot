@@ -1,0 +1,30 @@
+{% extends 'template.html' %}
+
+{% block title %}
+<title>UCJ</title>
+{% endblock %}
+
+
+{% block body %}
+<h1>Hi, {{g.user.username}}!</h1>
+
+<table class="table">
+    <tr>
+        <td class="bold">Имя сотрудника</td>
+        <td class="bold">Количество запроса в KZT</td>
+        <td class="bold">Дата получения запроса</td>
+    </tr>
+    {% for worker in workers|reverse %}
+    {% for user in users|reverse %}
+        {% if worker.tg_id|int == user.user_name|int %}
+        <tr>
+            <td>{{worker.name}}</td>
+            <td>{{user.answer}}</td>
+            <td>{{user.date}}</td>
+        </tr>
+        {% endif %}
+    {% endfor %}
+    {% endfor %}
+</table>
+
+{% endblock %}

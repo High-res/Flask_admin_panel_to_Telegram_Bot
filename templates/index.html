@@ -1,0 +1,31 @@
+{% extends 'template.html' %}
+
+{% block title %}
+<title>UCJ</title>
+{% endblock %}
+
+
+{% block body %}
+<h1>Hi, {{g.user.username}}!</h1>
+
+<table class="table">
+    <tr>
+        <td class="bold">Фамилия Имя</td>
+        <td class="bold">Месяц день рождения</td>
+        <td class="bold">Телеграм ID</td>
+        <td><a href="/get-profile" class="btn btn-primary">Добавить работника</a></td>
+        <td><a href="/delete-profile" class="btn btn-primary">Удалить работника</a></td>
+    </tr>
+    {% for worker in workers %}
+    <tr>
+        <form method="post">
+            <td><a href="/location/{{worker.tg_id}}"><input type="hidden" class="form-control" name="worker_name" value="{{worker.name}}" />{{worker.name}}</a></td>
+            <td><input type="text" class="form-control" name="b_day" value="{{worker.b_day}}" placeholder="{{worker.b_day}}" /></td>
+            <td><input type="num" class="form-control" name="tg_id" value="{{worker.tg_id}}" placeholder="{{worker.tg_id}}" /></td>
+            <td colspan="2"><input type="submit" class="fadeIn fourth form-control btn btn-primary" value="Сохранить"></td>
+        </form>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

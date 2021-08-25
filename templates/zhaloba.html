@@ -1,0 +1,27 @@
+{% extends 'template.html' %}
+
+{% block title %}
+<title>UCJ</title>
+{% endblock %}
+
+
+{% block body %}
+
+<table class="table">
+    <tr>
+        <td class="bold">Телеграм ID</td>
+        <td class="bold">Имя в телеграм</td>
+        <td class="bold">Жалоба/Предложение</td>
+        <td class="bold">Дата получения жалобы</td>
+    </tr>
+    {% for user in users|reverse %}
+    <tr>
+        <td>{{user.user_name}}</td>
+        <td>{{user.user_tg_id}}</td>
+        <td>{{user.answer}}</td>
+        <td>{{user.date}}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

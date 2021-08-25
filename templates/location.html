@@ -1,0 +1,44 @@
+{% extends 'template.html' %}
+
+{% block title %}
+<title>Местоположение сегодня</title>
+{% endblock %}
+
+
+{% block body %}
+
+<table class="table">
+    <tr>
+        <td class="bold">Имя работника</td>
+        <td class="bold">Долгота</td>
+        <td class="bold">Широта</td>
+        <td class="bold">Возле работы? Да/Нет</td>
+        <td class="bold">ССылка на карту</td>
+        <td class="bold">Дата/время получения получения</td>
+    </tr>
+    {% for worker in workers|reverse %}
+    {% for location in locations %}
+        {% if location.date == date  %}
+            {% if location.user_tg_id|int == worker.tg_id|int %}
+                <tr>
+                    <td>{{worker.name}}</td>
+                    <td>{{location.location_latitude}}</td>
+                    <td>{{location.location_longitude}}</td>
+                    {% if location.location_longitude|string > 76.900000|string and location.location_longitude|string < 76.913000|string and location.location_latitude|string < 43.286000|string and location.location_latitude|string > 43.284000|string %}
+                        <td>Да</td>
+                    {% else %}
+                        <td>Нет</td>
+                    {% endif %}
+                    <td><a href="https://2gis.kz/almaty?m={{location.location_longitude}}%2C{{location.location_latitude}}%2F19.35" target="_blank">Посмотреть на карте</a></td>
+                    <td>{{location.send_date}}</td>
+                </tr>
+                <!-- Решить вопрос что бы местополежние показывалось корректно -->
+            {% endif %}
+        {% endif %}
+
+    {% endfor %}
+    {% endfor %}
+</table>
+
+{% endblock %}
+

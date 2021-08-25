@@ -1,0 +1,30 @@
+{% extends 'template.html' %}
+
+{% block title %}
+<title>Удалить работника</title>
+{% endblock %}
+
+
+{% block body %}
+<h1>Hi, {{g.user.username}}!</h1>
+
+<table class="table">
+    <tr>
+        <td class="bold">ID</td>
+        <td class="bold">Фамилия Имя</td>
+        <td class="bold">Телеграм ID</td>
+        <td><a href="/profile" class="btn btn-primary">Вернуться</a></td>
+    </tr>
+    {% for worker in workers %}
+    <tr>
+        <form method="post">
+            <td><input type="hidden" class="form-control" name="worker_id" value="{{worker.id}}" />{{worker.id}}</td>
+            <td>{{worker.name}}</td>
+            <td>{{worker.tg_id}}</td>
+            <td><input type="submit" class="form-control" class="fadeIn fourth" value="Удалить"></td>
+        </form>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}
