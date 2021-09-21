@@ -1,0 +1,55 @@
+{% extends 'template.html' %}
+
+
+{% block title %}
+<title>Отложенные сообщения</title>
+{% endblock %}
+
+{% block body %}
+{% for challenge in challenges %}
+<table class="table">
+    <form method="post">
+        <tr>
+            <td class="bold">ID challenge</td>
+            <td><input type="hidden" class="form-control" name="challenge_id" value="{{challenge_id}}"  />{{challenge_id}}</td>
+        </tr>
+        <tr>
+            <td class="bold">Текст challenge</td>
+            <td><textarea type="text" class="form-control" name="msg_challenge" placeholder="{{challenge.challenge}}">{{challenge.challenge}}</textarea></td>
+        </tr>
+        <tr>
+            <td class="bold">Текст Выполнил</td>
+            <td><input type="text" class="form-control" name="msg_foryes" value="{{challenge.yes}}"  /></td>
+        </tr>
+        <tr>
+            <td class="bold">Текст Невыполнил</td>
+            <td><input type="text" class="form-control" name="msg_forno" value="{{challenge.no}}"  /></td>
+        </tr>
+        <tr>
+            <td class="bold">Текст если нажал выполнил</td>
+            <td><textarea type="text" class="form-control" name="answer_foryes"  placeholder="{{challenge.answerYes}}">{{challenge.answerYes}}</textarea></td>
+        </tr>
+        <tr>
+            <td class="bold">Текст если нажал не выполнил</td>
+            <td><textarea type="text" class="form-control" name="answer_forno" placeholder="{{challenge.answerNo}}">{{challenge.answerNo}}</textarea></td>
+        </tr>
+        <tr>
+            <td class="bold">Первое время отправки</td>
+            <td><input type="text" class="form-control" name="msg_date1" value="{{challenge.send_time_1}}"  /></td>
+        </tr>
+        <tr>
+            <td class="bold">Второе время отправки</td>
+            <td><input type="text" class="form-control" name="msg_date2" value="{{challenge.send_time_2}}"  /></td>
+        </tr>
+        <tr>
+            <td class="bold">Третье время отправки</td>
+            <td><input type="text" class="form-control" name="msg_date3" value="{{challenge.send_time_3}}"  /></td>
+        </tr>
+        <tr>
+            <td colspan="2" rowspan="2"><input type="submit" class="form-control" class="fadeIn fourth" value="Изменить"></td>
+        </tr>
+
+    </form>
+</table>
+{% endfor %}
+{% endblock %}

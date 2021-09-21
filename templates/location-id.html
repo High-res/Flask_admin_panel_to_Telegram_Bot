@@ -13,8 +13,9 @@
         <td class="bold">Долгота</td>
         <td class="bold">Широта</td>
         <td class="bold">Возле работы? Да/Нет</td>
-        <td class="bold">ССылка на карту</td>
+        <td class="bold">Ссылка на карту</td>
         <td class="bold">Дата/время получения получения</td>
+        <td class="bold"><a href="{{user_id}}.xlsx">Скачать xlsx</a></td>
     </tr>
         {% for worker in workers %}
         {% for location in locations %}
@@ -31,6 +32,7 @@
                         {% endif %}
                         <td><a href="https://2gis.kz/almaty?m={{location.location_longitude}}%2C{{location.location_latitude}}%2F19.35" target="_blank">Посмотреть на карте</a></td>
                         <td>{{location.send_date}}</td>
+                        <td></td>
                     </tr>
                 {% endif %}
             {% endif %}

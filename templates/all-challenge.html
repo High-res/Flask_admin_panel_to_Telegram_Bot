@@ -1,0 +1,31 @@
+{% extends 'template.html' %}
+
+{% block title %}
+<title>Все челленджи</title>
+{% endblock %}
+
+
+{% block body %}
+
+<table class="table">
+    <tr>
+        <td class="bold">Имя работника</td>
+        <td class="bold">Challenge name</td>
+        <td class="bold">Ответ работника</td>
+        <td class="bold">Дата/время</td>
+    </tr>
+        {% for worker in workers %}
+        {% for challenge in challenges %}
+            {% if worker.tg_id|int == challenge.tg_id|int %}
+            <tr>
+                <td>{{worker.name}}</td>
+                <td>{{challenge.challenge}}</td>
+                <td>{{challenge.answer}}</td>
+                <td>{{challenge.date}}</td>
+            </tr>
+            {% endif %}
+        {% endfor %}
+        {% endfor %}
+</table>
+
+{% endblock %}

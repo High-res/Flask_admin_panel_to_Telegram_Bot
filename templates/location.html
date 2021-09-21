@@ -15,10 +15,11 @@
         <td class="bold">Возле работы? Да/Нет</td>
         <td class="bold">ССылка на карту</td>
         <td class="bold">Дата/время получения получения</td>
+        <td class="bold"><a href="static/teams.xlsx">Скачать за текущий месяц</a> </td>
     </tr>
     {% for worker in workers|reverse %}
     {% for location in locations %}
-        {% if location.date == date  %}
+        {% if location.date == date_today  %}
             {% if location.user_tg_id|int == worker.tg_id|int %}
                 <tr>
                     <td>{{worker.name}}</td>

@@ -15,7 +15,9 @@ def allDates() :
     cloak_date = datetime.strptime(time.ctime(), "%a %b %d %H:%M:%S %Y")
     today = date.today()
     day = today.strftime('%Y-%m-%d')
-    return cloak_date, day
+    year_month = today.strftime('%Y-%m')
+    return cloak_date, day, year_month
+
 class User :
     def __init__(self, id, username, password) :
         self.id = id
@@ -117,17 +119,12 @@ def locationArchive(user_id):
 def locationToday():
     getWorker = actions.getWorkerss()
     getLocat = actions.getLocation()
+    actions.toXlsx()
     if not g.user :
         return redirect(url_for('login'))
-    return render_template('location.html', workers = getWorker, locations = getLocat, date = allDates()[1])
+    return render_template('location.html', workers = getWorker, locations = getLocat, date = allDates()[2], date_today = allDates()[1])
 
-getLocat = actions.getLocation()
-print(getLocat)
-for location in getLocat :
-    if  76.913000 < int(location['location_longitude']) > 76.900000 :
-        print('ДААААА')
-    else :
-        print('Нет')
+print(allDates()[2])
 # Жалобы и предложения
 @application.route('/zhaloba', methods= ['GET'])
 def zhaloba() :
@@ -168,6 +165,60 @@ def addMessage() :
         message_date = request.form['msg_date']
         actions.addMesages(message_text, message_date)
     return render_template('add-message.html')
+
+@application.route('/add-challenge', methods= ['POST', 'GET'])
+def addChallenge() :
+    if not g.user :
+        return redirect(url_for('login'))
+    if request.method == 'POST' :
+        challenge = request.form['msg_challenge']
+        yes = request.form['msg_foryes']
+        no = request.form['msg_forno']
+        answerYes = request.form['answer_foryes']
+        answerNo = request.form['answer_forno']
+        send_time_1 = request.form['msg_date1']
+        send_time_2 = request.form['msg_date2']
+        send_time_3 = request.form['msg_date3']
+        actions.addChallenge(challenge, yes, no, answerYes, answerNo, send_time_1, send_time_2, send_time_3, allDates()[1])
+    return render_template('add-challenge.html')
+
+@application.route('/challenge', methods= ['POST', 'GET'])
+def challenge() :
+    if not g.user :
+        return redirect(url_for('login'))
+    
+    challenge = actions.getChallenge()
+    if request.method == 'POST' :
+        challenge_id = request.form['challenge_id']
+        actions.removeChallenge(challenge_id)
+    return render_template('challenge.html', challenges = challenge)
+
+
+@application.route('/challenge/<challenge_id>', methods= ['POST', 'GET'])
+def updateChallenge(challenge_id) :
+    if not g.user :
+        return redirect(url_for('login'))
+    
+    challenge = actions.getChallenge()
+    if request.method == 'POST' :
+        challenge_name = request.form['msg_challenge']
+        yes = request.form['msg_foryes']
+        no = request.form['msg_forno']
+        answerYes = request.form['answer_foryes']
+        answerNo = request.form['answer_forno']
+        send_time_1 = request.form['msg_date1']
+        actions.updateChalenges(challenge_name, yes, no, answerYes, answerNo, send_time_1, challenge_id)
+    return render_template('edit_challenge.html', challenges = challenge, challenge_id = challenge_id)
+
+
+@application.route('/all-challenge', methods= ['POST', 'GET'])
+def allChallenge() :
+    if not g.user :
+        return redirect(url_for('login'))
+    getWorker = actions.getWorkerss()
+    challengeAction = actions.getChallengeAction()
+    print(challengeAction)
+    return render_template('all-challenge.html', workers = getWorker, challenges = challengeAction)
 
 # Выйти из системы
 @application.route('/get_out')
