@@ -18,6 +18,7 @@ def allDates() :
     year_month = today.strftime('%Y-%m')
     return cloak_date, day, year_month
 
+
 class User :
     def __init__(self, id, username, password) :
         self.id = id
@@ -26,7 +27,10 @@ class User :
 
     def __repr__(self):
         return f'<User: {self.username}>'
+
+
 users = []
+
 for row in actions.getUser():
     users.append(User(id=row['id'], username=row['name'], password=row['password']))
 
@@ -38,7 +42,8 @@ def before_request():
     if 'user_id' in session:
         user = [x for x in users if x.id == session['user_id']][0]
         g.user = user
-    
+
+
 # Авторизация администратора
 @application.route('/', methods= ['POST', 'GET'])
 def login() :
@@ -58,6 +63,7 @@ def login() :
         return redirect(url_for('login'))
     return render_template('login.html')
 
+
 # Работники компании
 @application.route('/profile', methods= ['POST', 'GET'])
 def profile() :
@@ -72,6 +78,7 @@ def profile() :
         actions.updateWorker(worker_name, worker_b_day, worker_tg_id)
     return render_template('index.html', workers = getWorker, locations = getLocat, date = allDates()[0])
 
+
 # Добавить работника
 @application.route('/get-profile', methods=['POST', 'GET'])
 def putProfile() :
@@ -84,6 +91,7 @@ def putProfile() :
         actions.addWorkers(new_worker_name, new_worker_b_day, new_worker_tg_id)
     return render_template('putProfile.html')
 
+
 @application.route('/delete-profile', methods=['POST', 'GET'])
 def deleteProfile() :
     if not g.user :
@@ -93,7 +101,6 @@ def deleteProfile() :
         worker_id = request.form['worker_id']
         actions.removeWorkers(worker_id)
     return render_template('deleteProfile.html', workers = getWorker)
-
 
 
 # Пользователи телеграм
@@ -114,17 +121,19 @@ def locationArchive(user_id):
         return redirect(url_for('login'))
     return render_template('location-id.html', workers = getWorker, locations = getLocat, user_id = user_id)
 
+
 # Местоположение сегодня
 @application.route('/location', methods= ['GET'])
 def locationToday():
     getWorker = actions.getWorkerss()
     getLocat = actions.getLocation()
-    actions.toXlsx()
+    actions.toXlsxThisMonth()
+    actions.toXlsxLastMonth()
     if not g.user :
         return redirect(url_for('login'))
     return render_template('location.html', workers = getWorker, locations = getLocat, date = allDates()[2], date_today = allDates()[1])
 
-print(allDates()[2])
+
 # Жалобы и предложения
 @application.route('/zhaloba', methods= ['GET'])
 def zhaloba() :
@@ -156,6 +165,7 @@ def message() :
         actions.deleteMessages(message_id)
     return render_template('message.html', messages = message)
 
+
 @application.route('/add-message', methods= ['POST', 'GET'])
 def addMessage() :
     if not g.user :
@@ -165,6 +175,7 @@ def addMessage() :
         message_date = request.form['msg_date']
         actions.addMesages(message_text, message_date)
     return render_template('add-message.html')
+
 
 @application.route('/add-challenge', methods= ['POST', 'GET'])
 def addChallenge() :
@@ -181,6 +192,7 @@ def addChallenge() :
         send_time_3 = request.form['msg_date3']
         actions.addChallenge(challenge, yes, no, answerYes, answerNo, send_time_1, send_time_2, send_time_3, allDates()[1])
     return render_template('add-challenge.html')
+
 
 @application.route('/challenge', methods= ['POST', 'GET'])
 def challenge() :
@@ -219,6 +231,7 @@ def allChallenge() :
     challengeAction = actions.getChallengeAction()
     print(challengeAction)
     return render_template('all-challenge.html', workers = getWorker, challenges = challengeAction)
+
 
 # Выйти из системы
 @application.route('/get_out')
