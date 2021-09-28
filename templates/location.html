@@ -13,9 +13,21 @@
         <td class="bold">Долгота</td>
         <td class="bold">Широта</td>
         <td class="bold">Возле работы? Да/Нет</td>
-        <td class="bold">ССылка на карту</td>
+        <td class="bold">Ссылка на карту</td>
         <td class="bold">Дата/время получения получения</td>
-        <td class="bold"><a href="static/teams.xlsx">Скачать за текущий месяц</a> </td>
+        <td class="bold">
+            <ul class="nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Скачать <i class="fas fa-file-excel"></i>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="static/teams.xlsx">Скачать за текущий месяц</a></li>
+                        <li><a class="dropdown-item" href="static/last.xlsx">Скачать за предыдущий месяц</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </td>
     </tr>
     {% for worker in workers|reverse %}
     {% for location in locations %}
